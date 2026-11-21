@@ -9,17 +9,22 @@ artwork that Unraid shows. See [Install a template](#install-a-template).
 ## Layout
 
 ```
-templates/    one XML file for each container (my-<name>.xml)
+templates/       one XML file for each container (my-<name>.xml)
+assets/<name>/   each template's icon and screenshots, linked by raw URL
+ca_profile.xml   the repository profile Community Applications shows
+icon.png         the repository's icon in Community Applications
+banner.png       the repository's social preview image on GitHub
 ```
 
-Icons and screenshots live in the image's own repository. Each XML points at
-them with a raw URL.
+Each template's artwork lives under `assets/<name>/`, and the XML links to it with a raw
+GitHub URL.
 
 ## Templates
 
-| Template                   | Image                   | Notes                                                                                  |
-| -------------------------- | ----------------------- | -------------------------------------------------------------------------------------- |
-| `templates/my-opengym.xml` | `0x1917/opengym:latest` | Workout and body-weight tracker ([OpenGym](https://github.com/DuarteSantos8/openGym)). | 
+| Template                            | Image                            | Notes                                                                                                     |
+| ----------------------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `templates/my-opengym.xml`          | `0x1917/opengym:latest`          | Workout and body-weight tracker ([OpenGym](https://github.com/DuarteSantos8/openGym)).                    |
+| `templates/my-deepseek-harness.xml` | `0x1917/deepseek-harness:latest` | An [open-source](https://github.com/deepseek-ai/deepseek-harness) agent harness developed by DeepSeek AI. |
 
 ### Install a template
 

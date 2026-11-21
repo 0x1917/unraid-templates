@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Container version="2">
+  <Name>DeepSeek-Harness</Name>
+  <Repository>0x1917/deepseek-harness</Repository>
+  <Registry>https://hub.docker.com/r/0x1917/deepseek-harness</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <MyMAC/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/0x1917/deepseek-harness/issues</Support>
+  <Project>https://github.com/deepseek-ai/deepseek-harness</Project>
+  <ReadMe>https://github.com/0x1917/deepseek-harness/blob/master/README.md</ReadMe>
+  <Overview>DeepSeek Harness is DeepSeek AI's open-source agent harness: an AI coding agent you run in the browser. Give it a workspace and it reads and edits files, runs commands in a sandbox, keeps a session history, and schedules recurring tasks.</Overview>
+  <Requires>To access the web UI for the first time, open the login link that's printed in the container's logs. This will set a session cookie that keeps your browser signed in for 30 days.</Requires>
+  <ExtraSearchTerms>deepseek harness dsh coding agent ai si artificial super intelligence llm developer agentic models hermes grok bot openclaw muse qwen kimi claude anthropic openai ollama</ExtraSearchTerms>
+  <Category>AI: Tools: Productivity:</Category>
+  <WebUI>http://[IP]:[PORT:3080]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/0x1917/unraid-templates/master/templates/my-deepseek-harness.xml</TemplateURL>
+  <License>MIT</License>
+  <Icon>https://raw.githubusercontent.com/0x1917/unraid-templates/refs/heads/master/assets/dsh/icon.png</Icon>
+  <ExtraParams>--security-opt seccomp=unconfined --security-opt systempaths=unconfined</ExtraParams>
+  <PostArgs/>
+  <Beta>true</Beta>
+  <Config Name="Web UI Port" Target="3080" Default="3080" Mode="tcp" Description="The published HTTP port. Change the host side only; DSH listens on 3080 inside the container." Type="Port" Display="always" Required="true" Mask="false">3080</Config>
+  <Config Name="App Data" Target="/data" Default="/mnt/user/appdata/dsh/data" Mode="rw" Description="Settings, sessions, plugins, and the saved API key." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/dsh/data</Config>
+  <Config Name="Workspace" Target="/workspace" Default="/mnt/user/appdata/dsh/workspace" Mode="rw" Description="The folder the agent reads and edits." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/dsh/workspace</Config>
+  <Config Name="Home" Target="/home/dsh" Default="/mnt/user/appdata/dsh/home" Mode="rw" Description="The app user's home: tools the agent installs (npm -g, pip --user, uv tool), SSH keys, and configs." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/dsh/home</Config>
+  <Config Name="Trusted Hosts" Target="DSH_TRUSTED_HOSTS" Default="" Mode="" Description="Comma-separated list of hostnames or IPs allowed to reach the UI (e.g. 192.168.1.10,dsh.example.com)." Type="Variable" Display="always" Required="true" Mask="false"></Config>
+  <Config Name="Public URL" Target="DSH_PUBLIC_URL" Default="" Mode="" Description="The full URL printed in the container log as the login link (e.g. https://dsh.example.com)." Type="Variable" Display="always" Required="false" Mask="false"></Config>
+</Container>
