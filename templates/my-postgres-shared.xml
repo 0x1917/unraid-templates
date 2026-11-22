@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Container version="2">
+  <Name>PostgreSQL-Shared</Name>
+  <Repository>0x1917/postgres-shared</Repository>
+  <Registry>https://hub.docker.com/r/0x1917/postgres-shared</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <MyMAC/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/0x1917/postgres-shared/issues</Support>
+  <Project>https://www.postgresql.org/</Project>
+  <ReadMe>https://github.com/0x1917/postgres-shared#readme</ReadMe>
+  <Overview>One PostgreSQL 17 server for every database app on your server. pgvector, VectorChord, PostGIS and pg_cron come preinstalled, so Immich (VectorChord), Dawarich (PostGIS), firecrawl (pg_cron and its NUQ queue), Paperless-ngx, Linkwarden and pgvector RAG apps can all share one cluster, one appdata folder and one backup, each with its own database and role. Most Postgres images here serve one app or one extension; this one carries all four at once. It is built on the official postgres image and keeps its entrypoint, so every POSTGRES_* variable works as documented and an existing postgres:17 data directory can be reused. Extensions stay inert until you run CREATE EXTENSION in a database, nothing runs ALTER SYSTEM on your cluster, and every component is pinned and verified. Tags follow the PostgreSQL release and never jump to a new major version, so Update is always safe for an existing cluster. amd64 only.</Overview>
+  <ExtraSearchTerms>postgres postgresql database sql pgvector vectorchord vchord postgis pg_cron cron immich dawarich firecrawl paperless linkwarden vector embeddings rag gis spatial shared</ExtraSearchTerms>
+  <Category>Productivity: Tools:</Category>
+  <WebUI/>
+  <TemplateURL>https://raw.githubusercontent.com/0x1917/unraid-templates/master/templates/my-postgres-shared.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/0x1917/unraid-templates/master/assets/postgres-shared/icon.png</Icon>
+  <License>MIT covers the packaging. PostgreSQL, pgvector and pg_cron: PostgreSQL License. PostGIS: GPL-2.0-or-later. VectorChord: AGPL-3.0 or Elastic License 2.0. firecrawl NUQ schema: AGPL-3.0.</License>
+  <ExtraParams>--shm-size=1g</ExtraParams>
+  <PostArgs/>
+  <Config Name="Database Port" Target="5432" Default="5432" Mode="tcp" Description="The port apps connect to. Keep it on your LAN: do not forward it to the internet." Type="Port" Display="always" Required="true" Mask="false">5432</Config>
+  <Config Name="Data Directory" Target="/var/lib/postgresql/data" Default="/mnt/user/appdata/postgres-shared" Mode="rw" Description="The database cluster. Owned by uid 999 (postgres) with mode 700; keep it out of permission-fixing tools. Prefer a cache or SSD pool." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/postgres-shared</Config>
+  <Config Name="Superuser Password" Target="POSTGRES_PASSWORD" Default="" Mode="" Description="Password for the superuser. Used only when a new, empty data directory is initialised; afterwards change it with ALTER ROLE." Type="Variable" Display="always" Required="true" Mask="true"/>
+  <Config Name="Superuser Name" Target="POSTGRES_USER" Default="postgres" Mode="" Description="Name of the superuser created on first start." Type="Variable" Display="advanced" Required="false" Mask="false">postgres</Config>
+  <Config Name="Default Database" Target="POSTGRES_DB" Default="" Mode="" Description="Database created on first start. Empty means the superuser's name. Create one database per app afterwards (see the README)." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Firecrawl NUQ Database" Target="NUQ_DATABASE" Default="" Mode="" Description="For firecrawl: on a fresh data directory, create this database (e.g. firecrawl) and load firecrawl's NUQ queue schema and pg_cron jobs into it. Also points pg_cron at it. Leave empty if you do not run firecrawl." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="pg_cron Database" Target="PG_CRON_DATABASE" Default="" Mode="" Description="The single database pg_cron lives in (cron.database_name). Empty keeps the cluster's own setting, default postgres. Jobs can still target other databases with cron.schedule_in_database." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+</Container>
