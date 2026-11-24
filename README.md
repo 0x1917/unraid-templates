@@ -21,10 +21,11 @@ GitHub URL.
 
 ## Templates
 
-| Template                            | Image                            | Notes                                                                                                     |
-| ----------------------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `templates/my-opengym.xml`          | `0x1917/opengym:latest`          | Workout and body-weight tracker ([OpenGym](https://github.com/DuarteSantos8/openGym)).                    |
-| `templates/my-deepseek-harness.xml` | `0x1917/deepseek-harness:latest` | An [open-source](https://github.com/deepseek-ai/deepseek-harness) agent harness developed by DeepSeek AI. |
+| Template                            | Image                            | Notes                                                                                                                           |
+| ----------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `templates/my-opengym.xml`          | `0x1917/opengym:latest`          | Workout and body-weight tracker ([OpenGym](https://github.com/DuarteSantos8/openGym)).                                          |
+| `templates/my-deepseek-harness.xml` | `0x1917/deepseek-harness:latest` | An [open-source](https://github.com/deepseek-ai/deepseek-harness) agent harness developed by DeepSeek AI.                       |
+| `templates/my-magnitude.xml`        | `magnitudedev/magnitude:latest`  | Local LLM inference engine with OpenAI- and Anthropic-compatible APIs ([Magnitude](https://github.com/magnitudedev/magnitude)). |
 
 ### Install a template
 

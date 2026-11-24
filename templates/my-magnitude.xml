@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Container version="2">
+  <Name>Magnitude</Name>
+  <Repository>magnitudedev/magnitude</Repository>
+  <Registry>https://hub.docker.com/r/magnitudedev/magnitude</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <MyMAC/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/magnitudedev/magnitude/issues</Support>
+  <Project>https://github.com/magnitudedev/magnitude</Project>
+  <ReadMe>https://docs.magnitude.dev/installation/docker</ReadMe>
+  <Overview>Magnitude is an open-source inference engine that runs open-weight models on your own hardware. It tunes its kernels for your GPU when you download a model, and serves them through a browser app and through APIs compatible with OpenAI and Anthropic. Point Open WebUI, coding agents, or anything else that speaks the OpenAI API at it. Runs on NVIDIA, AMD, and Intel GPUs (CUDA on NVIDIA, Vulkan on the others), or on the CPU.[br][br]The template is pre-configured for an NVIDIA GPU. For an AMD or Intel GPU, replace `--gpus=all` with `--device=/dev/dri --group-add=GID`, where GID is what `stat -c %g /dev/dri/renderD128` prints. For the CPU only, remove `--gpus=all`.</Overview>
+  <Requires></Requires>
+  <ExtraSearchTerms>magnitude llm inference local ai models ollama llama.cpp lm studio openai api anthropic gguf qwen gemma llama deepseek mistral cuda vulkan nvidia gpu self-hosted</ExtraSearchTerms>
+  <Category>AI: Tools: Productivity:</Category>
+  <WebUI>http://[IP]:[PORT:10100]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/0x1917/unraid-templates/master/templates/my-magnitude.xml</TemplateURL>
+  <License>Apache-2.0</License>
+  <Icon>https://raw.githubusercontent.com/0x1917/unraid-templates/refs/heads/master/assets/magnitude/icon.png</Icon>
+  <ExtraParams>--gpus=all --user=99:100</ExtraParams>
+  <PostArgs/>
+  <Config Name="Port" Target="10100" Default="10100" Mode="tcp" Description="The browser app and both APIs (/inference/v1 for OpenAI, /inference/anthropic for Anthropic). Change the host side only; Magnitude listens on 10100 inside the container." Type="Port" Display="always" Required="true" Mask="false">10100</Config>
+  <Config Name="App Data" Target="/data" Default="/mnt/user/appdata/magnitude" Mode="rw" Description="Models, settings, logs, and the saved network key. Must be writable by uid 99 (nobody:users). Models are large: put this on a share with room for them." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/magnitude</Config>
+  <Config Name="Password" Target="MAGNITUDE_NETWORK_KEY" Default="" Mode="" Description="The API key used for every client and browser - 16 to 512 characters without spaces (e.g. the output of: openssl rand -hex 32). Leave empty to use the key Magnitude generates on first start and prints in the log." Type="Variable" Display="always" Required="true" Mask="true"></Config>
+  <Config Name="Allowed Hosts" Target="MAGNITUDE_ALLOWED_HOSTS" Default="" Mode="" Description="Extra host names the browser app may be opened under, comma-separated (e.g. tower.local,magnitude.example.com). IP addresses always work." Type="Variable" Display="advanced" Required="false" Mask="false"></Config>
+  <Config Name="Ollama Models" Target="/usr/share/ollama/.ollama/models" Default="" Mode="ro" Description="The path to an existing Ollama model library (the folder holding blobs/ and manifests/ directories). Files must be readable by uid 99." Type="Path" Display="advanced" Required="false" Mask="false"></Config>
+  <Config Name="Hugging Face Models" Target="/data/.cache/huggingface/hub" Default="" Mode="ro" Description="The path to an existing Hugging Face hub cache (the folder holding models--* directories). Files must be readable by uid 99." Type="Path" Display="advanced" Required="false" Mask="false"></Config>
+</Container>
