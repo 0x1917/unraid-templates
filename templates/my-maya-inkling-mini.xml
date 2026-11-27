@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Container version="2">
+  <Name>Maya-Inkling-Mini</Name>
+  <Repository>maya-inkling-mini:latest</Repository>
+  <Registry/>
+  <Network>bridge</Network>
+  <MyIP/>
+  <MyMAC/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/alesha-pro/maya-inkling-mini/issues</Support>
+  <Project>https://github.com/alesha-pro/maya-inkling-mini</Project>
+  <ReadMe>https://github.com/alesha-pro/maya-inkling-mini/blob/main/docs/INKLING2-MINI.md</ReadMe>
+  <Overview>Maya-Inkling-Mini serves Thinking Machines' Inkling 2 Mini (a 26B mixture-of-experts model) on a single NVIDIA GPU, with every weight in the VRAM of a 24 GB card, through APIs compatible with OpenAI and Anthropic, including tool calls and streaming. On an RTX 3090 it writes about 125 tokens per second, and up to about 200 on code and edits with the model's own DSpark drafter. The first start downloads the model (about 18 GB, once) into App Data and builds its tokenizer, then serves it. Point Open WebUI, coding agents, or anything else that speaks the OpenAI API at http://SERVER:18000/v1 with the model name inkling-2-mini. Text only: this image doesn't read pictures.</Overview>
+  <Requires>The image is built on this server, not pulled: check out the maya-inkling-mini repository and run docker/build.sh --archs "86" (86 for an RTX 30 card, 89 for RTX 40, 120 for RTX 50); it tags maya-inkling-mini:latest. Unraid's update check can't see a local image, so rebuild it to update. An NVIDIA GPU of the RTX 30 generation or newer and the Nvidia Driver plugin (a driver for CUDA 13, version 580 or later); the template passes --gpus=all (to use one GPU of several, replace it with --gpus=device=UUID; nvidia-smi -L lists them). The engine holds about 21 GB of VRAM at the default 64k Context the whole time it runs, so a transcode (Plex, Jellyfin, or Tdarr) that starts on the same card afterwards can fail; lower Context, use the 8 GB Config, or set Idle Unload to share the card. Set an API Key: without one, anyone who can reach the port can use the server.</Requires>
+  <ExtraSearchTerms>maya inkling inkling2 inkling-2-mini thinking machines llm inference local ai models openai api anthropic dspark speculative decoding moe gpu nvidia cuda rtx 3090 4090 5090 self-hosted</ExtraSearchTerms>
+  <Category>AI: Tools:</Category>
+  <WebUI/>
+  <TemplateURL>https://raw.githubusercontent.com/0x1917/unraid-templates/master/templates/my-maya-inkling-mini.xml</TemplateURL>
+  <License>MIT</License>
+  <Icon>https://raw.githubusercontent.com/0x1917/unraid-templates/refs/heads/master/assets/maya-inkling-mini/icon.png</Icon>
+  <ExtraParams>--gpus=all --ulimit memlock=-1 --stop-timeout=60</ExtraParams>
+  <PostArgs/>
+  <Beta>true</Beta>
+  <Config Name="Port" Target="18000" Default="18000" Mode="tcp" Description="The OpenAI- and Anthropic-compatible API, at /v1. Change the host side only; the server listens on 18000 inside the container." Type="Port" Display="always" Required="true" Mask="false">18000</Config>
+  <Config Name="App Data" Target="/data" Default="/mnt/user/appdata/maya-inkling-mini" Mode="rw" Description="The model and its drafter (about 18 GB, downloaded on the first start) and the tokenizer. Put it on a fast pool: the engine reads the model from here each time it starts." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/maya-inkling-mini</Config>
+  <Config Name="API Key" Target="MAYA_API_KEY" Default="" Mode="" Description="The key every client sends (Authorization: Bearer KEY, or x-api-key: KEY), e.g. the output of: openssl rand -hex 24. Several keys can be separated by commas. Leave empty only if no one else can reach the port: the server then has no authentication at all." Type="Variable" Display="always" Required="false" Mask="true"></Config>
+  <Config Name="Config" Target="CONFIG" Default="ik2-mini|ik2-mini-text|ik2-mini-8gb" Mode="" Description="ik2-mini: with the DSpark drafter, fastest on code and edits, up to 262k tokens of context. ik2-mini-text: no drafter, about 1 GB less VRAM, up to 344k tokens. ik2-mini-8gb: for a card with 8 GB or more, about 7 GB of VRAM but 15 GB of RAM, and 16k tokens of context (empty Context, or 16384 at most, with it)." Type="Variable" Display="always" Required="false" Mask="false">ik2-mini</Config>
+  <Config Name="Context" Target="MAX_CONTEXT" Default="65536" Mode="" Description="The longest conversation in tokens (prompt and answer together). Each token of context reserves 16 KB of VRAM up front: 65536 holds about 1 GB, 262144 about 4 GB. Empty uses the Config's own (262144, 344064, or 16384)." Type="Variable" Display="always" Required="false" Mask="false">65536</Config>
+  <Config Name="Idle Unload" Target="IDLE_UNLOAD" Default="" Mode="" Description="Optional: seconds without a request before the engine stops and gives its VRAM back to other containers, e.g. 600. The next request loads it again, which takes up to a minute. Empty: never." Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="Parallel Requests" Target="PARALLEL" Default="" Mode="" Description="Optional: serve 2 to 8 requests at once (continuous batching) instead of one after another. Empty: one at a time." Type="Variable" Display="advanced" Required="false" Mask="false"></Config>
+  <Config Name="Conversation RAM" Target="IK2_SLOT_RAM_GB" Default="4" Mode="" Description="The most RAM, in GB, for conversations the engine parks in RAM when another request takes the GPU, so they come back without reading the whole prompt again (about 1 GB for a 50k-token chat). Empty: up to half of the free RAM." Type="Variable" Display="advanced" Required="false" Mask="false">4</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="The owner given to the files the container writes in App Data (99: nobody)." Type="Variable" Display="advanced" Required="false" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="The group given to the files the container writes in App Data (100: users)." Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
+</Container>
